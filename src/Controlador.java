@@ -6,6 +6,7 @@ public class Controlador {
     ArbolBinario español_frances = new ArbolBinario();
     ArbolBinario frances_ingles = new ArbolBinario();
     ArbolBinario frances_español = new ArbolBinario();
+    int Eleccion = 0;
 
     ArrayList<String> Definiciones = new ArrayList<String>();
     String RespS = "";
@@ -22,24 +23,38 @@ public class Controlador {
         Definiciones = read.lineas;
         for (int i = 0; i <Definiciones.size(); i++) {
             String[] arrays = Definiciones.get(i).toLowerCase().split(",");
-            ingles_español.agregar(arrays[0],arrays[1]);
-            ingles_frances.agregar(arrays[0],arrays[2]);
-            español_ingles.agregar(arrays[1],arrays[0]);
-            español_frances.agregar(arrays[1],arrays[2]);
-            frances_ingles.agregar(arrays[2],arrays[0]);
-            frances_español.agregar(arrays[2],arrays[1]);
+            ingles_español.insertar(arrays[0],arrays[1]);
+            ingles_frances.insertar(arrays[0],arrays[2]);
+            español_ingles.insertar(arrays[1],arrays[0]);
+            español_frances.insertar(arrays[1],arrays[2]);
+            frances_ingles.insertar(arrays[2],arrays[0]);
+            frances_español.insertar(arrays[2],arrays[1]);
         }
-        System.out.println("Elija el idioma que desea traducir su oracion: 1. Ingles, 2. Español, 3. Frances");
-        RespI = sc.nextInt();
-        System.out.println("Escriba la oracion que desea que se traduzca: ");
-        sc.nextLine();
-        RespS = sc.nextLine();
-        String[] Oracion_Dividida = RespS.split(" ");
-        for (int i = 0; i < Oracion_Dividida.length ; i++) {
-            String temporal = traducir(Oracion_Dividida[i]);
-            String_Builder = String_Builder + " "+ temporal;
+        System.out.println("Desea traducir una oracion o ver las relaciones de las palabras: 1. Traducir 2. Relacion");
+        Eleccion = sc.nextInt();
+
+        if(Eleccion == 1) {
+            System.out.println("Elija el idioma que desea traducir su oracion: 1. Ingles, 2. Español, 3. Frances");
+            RespI = sc.nextInt();
+            System.out.println("Escriba la oracion que desea que se traduzca: ");
+            sc.nextLine();
+            RespS = sc.nextLine();
+            String[] Oracion_Dividida = RespS.split(" ");
+            for (int i = 0; i < Oracion_Dividida.length; i++) {
+                String temporal = traducir(Oracion_Dividida[i]);
+                String_Builder = String_Builder + " " + temporal;
+            }
+            System.out.println(String_Builder);
         }
-        System.out.println(String_Builder);
+        if(Eleccion == 2){
+            ingles_español.imprimirRelaciones();
+            ingles_frances.imprimirRelaciones();
+            español_ingles.imprimirRelaciones();
+            español_frances.imprimirRelaciones();
+            frances_ingles.imprimirRelaciones();
+            frances_español.imprimirRelaciones();
+
+        }
 
     }
     public String traducir(String palabra){
